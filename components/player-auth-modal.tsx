@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { CheckCircle, EnvelopeSimple, PaperPlaneTilt, X } from '@phosphor-icons/react';
 import { useApp } from '@/components/app-provider';
 import { SPRING_SOFT } from '@/components/motion/primitives';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -43,6 +43,11 @@ export function PlayerAuthModal({ open, onClose, title = 'Join the game' }: { op
     if (!isValidEmail(cleaned)) {
       setStatus('error');
       setMessage('Enter a valid email address.');
+      return;
+    }
+    if (!isSupabaseConfigured) {
+      setStatus('error');
+      setMessage('Email sign-in is not configured yet. Use demo access or contact the Sportshunt team.');
       return;
     }
     setStatus('sending');

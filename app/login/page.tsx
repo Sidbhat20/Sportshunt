@@ -8,7 +8,7 @@ import { useApp } from '@/components/app-provider';
 import { AuthShell } from '@/components/auth/auth-shell';
 import { expectedRoleForRoute, getTestingLoginForRole, isTestingCredentialMatch } from '@/lib/auth-config';
 import { homeForRole } from '@/lib/roles';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 import type { Role } from '@/types';
 
 const PARTNER_ROLES = ['admin', 'organizer', 'organiser', 'venue-owner', 'referee'] as const;
@@ -116,6 +116,11 @@ function PlayerMagicLink({ meta, onLocalLogin, router }: { meta: { eyebrow: stri
     if (!isValidEmail(cleaned)) {
       setStatus('error');
       setMessage('Enter a valid email address.');
+      return;
+    }
+    if (!isSupabaseConfigured) {
+      setStatus('error');
+      setMessage('Email sign-in is not configured yet. Use demo access or contact the Sportshunt team.');
       return;
     }
     setStatus('sending');

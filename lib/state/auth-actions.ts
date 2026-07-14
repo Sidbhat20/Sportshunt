@@ -6,7 +6,7 @@ import {
   isTestingLoginEmail,
 } from '@/lib/auth-config';
 import type { AppContextValue, MessageResult, RefereeSession } from '@/lib/state/types';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
 function buildPlayerUser(email: string, name: string): AppUser {
   const normalizedEmail = email.trim().toLowerCase();
@@ -95,7 +95,7 @@ export function createAuthActions({
     logout() {
       setSession(null);
       setRefereeSession(null);
-      void supabase.auth.signOut();
+      if (isSupabaseConfigured) void supabase.auth.signOut();
     },
   };
 }

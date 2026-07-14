@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useApp } from '@/components/app-provider';
 import { PublicHeader } from '@/components/layouts/public-header';
 import { SurfaceCard } from '@/components/ui';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
 export default function AuthCallbackPage() {
   return (
@@ -29,6 +29,9 @@ function Callback() {
 
     async function run() {
       try {
+        if (!isSupabaseConfigured) {
+          throw new Error('Email sign-in is not configured for this deployment.');
+        }
         const url = new URL(window.location.href);
         const code = url.searchParams.get('code');
         const errorDescription =
