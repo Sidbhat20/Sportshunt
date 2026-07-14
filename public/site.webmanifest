@@ -1,0 +1,21 @@
+{
+  "name": "Sportshunt",
+  "short_name": "Sportshunt",
+  "description": "Book turfs, fill games, run tournaments, and manage approvals.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#15803d",
+  "icons": [
+    {
+      "src": "/sh-logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
